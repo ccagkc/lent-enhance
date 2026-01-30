@@ -1,0 +1,98 @@
+/* * 華人神召會葵涌堂 2026 預苦期靈修日曆 - 樣式表
+ * 包含：全域變數、字型、玻璃擬態卡片、日曆網格與動畫效果
+ */
+
+:root {
+    /* 核心色票 */
+    --primary-purple: #4c1d95;
+    --accent-gold: #fbbf24;
+    
+    /* 玻璃擬態 (Glassmorphism) 設定 */
+    --glass-bg: rgba(255, 255, 255, 0.1);
+    --glass-border: rgba(255, 255, 255, 0.2);
+    --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+}
+
+/* 基礎設定 */
+body {
+    font-family: 'Crimson Pro', 'Noto Serif TC', serif;
+    background: linear-gradient(135deg, #2e1065 0%, #4c1d95 50%, #6d28d9 100%);
+    background-attachment: fixed;
+    color: #fef3c7; /* 琥珀色文字 (Amber-100) */
+    overflow-x: hidden;
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* 玻璃擬態卡片 */
+.glass-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px); /* Safari 支援 */
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--glass-shadow);
+}
+
+/* 日曆格子樣式 */
+.calendar-day {
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    aspect-ratio: 1 / 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.calendar-day:not(.disabled):active {
+    transform: scale(0.9);
+}
+
+/* 桌面版懸停效果 */
+@media (min-width: 768px) {
+    .calendar-day:not(.disabled):hover {
+        transform: translateY(-5px) scale(1.05);
+        background: rgba(255, 255, 255, 0.2);
+    }
+}
+
+/* 今日標記 */
+.calendar-day.today {
+    outline: 2px solid var(--accent-gold);
+    outline-offset: -2px;
+}
+
+/* 非靈修期間或無效日期 */
+.calendar-day.disabled {
+    opacity: 0.15;
+    cursor: not-allowed;
+    filter: grayscale(1);
+}
+
+/* 進度圈旋轉 */
+.progress-ring { 
+    transform: rotate(-90deg); 
+}
+
+/* 淡入動畫 */
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in { 
+    animation: fadeInUp 0.5s ease-out forwards; 
+}
+
+/* 按鈕樣式 */
+.nav-btn {
+    background: linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    touch-action: manipulation;
+}
+
+.nav-btn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+    transform: none !important;
+}
